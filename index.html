@@ -5,17 +5,36 @@
     <meta charset="UTF-8">
     <title>Guessing Game</title>
     <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Shadows+Into+Light&display=swap" rel="stylesheet">
     <!-- the MAIN.CSS file is linked here -->
   </head>
 
   <body>
+    <div id='first'></div>
+    <div id='second'>
 
 
+      <h1>My Guessing Game</h1>
+      <h2>Guess a number between 1-100</h2>
+      <input class='your-guess' max='100'>
+      <p>
+        <input id='submit-button' type='button' value='Submit Guess' class='btn second'>
+        <button class="btn second">Hint</button>
+      </p>
+      <h2 id="current-status">Today you are lucky, start the game, don't be afraid!</h2>
+      <p>YOUR PREVIOUS GUESSES:</p>
+      <ul>
+        <li class='square' id='guess1'></li>
+        <li class='square' id='guess2'></li>      
+        <li class='square' id='guess3'></li>
+        <li class='square' id='guess4'></li>
+        <li class='square' id='guess5'></li>    
+      </ul>
+      <input type='button' value='Play Again' id='play-again' class='btn second'>
 
 
-
-    <!-- <script src='js/guessing-game.js'></script> -->
-    <!-- uncomment the script tag above when you are ready to add JavaScript to your document -->
+    </div>
+    <script src='js/guessing-game.js'></script>
   </body>
 
 </html>
