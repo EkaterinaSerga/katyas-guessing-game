@@ -22,7 +22,8 @@ function shuffle(arr) {
         arr[i] = t;
         console.log(arr)
     }
-  return arr;
+
+    return arr;
 }
 
 class Game {
@@ -41,9 +42,8 @@ class Game {
     }
 
     playersGuessSubmission(num) {
-
-        if (num < 1 || num > 100 || typeof num !== 'number') {
-            throw new Error('That is an invalid guess.')
+        if (num < 1 || num > 100 || isNaN(num) === true) {
+            // throw new Error('That is an invalid guess.')
             return 'That is an invalid guess.';
         }
 
@@ -56,7 +56,7 @@ class Game {
 
     checkGuess() {
         if (this.playersGuess === this.winningNumber) {
-            return "You Win!"
+            return "🏆YOU WIN!!!🏆"
         }
         if (this.pastGuesses.includes(this.playersGuess)) {
             return "You have already guessed that number."
@@ -65,27 +65,44 @@ class Game {
             document.querySelector(`#guess${this.pastGuesses.push(this.playersGuess)}`).textContent = this.playersGuess;
         }
         if (this.pastGuesses.length === 5) {
-            return "You Lose."
+            return "YOU LOSE 💩💩💩"
         }
+        
         if (this.difference() < 10) {
-            return "You\'re burning up!: less than 10 digits away"
+            return "You\'re burning up! 🔥🔥🔥"
         }
         if (this.difference() < 25) {
-            return "You\'re lukewarm: less than 25 digits away"
+            return "You\'re lukewarm 🔥🔥"
         }
         if (this.difference() < 50) {
-            return "You\'re a bit chilly: less than 50 digits away"
+            return "You\'re a bit chilly ❄️❄️"
         }
         if (this.difference() < 100) {
-            return "You\'re ice cold!"
+            return "You\'re ice cold! ❄️❄️❄️"
         }
     }
 
     provideHint() {
         let arr = [];
         arr.push(this.winningNumber)
-        arr.push(generateWinningNumber());
-        arr.push(generateWinningNumber());
+        
+        let anotherNumber1 = generateWinningNumber(); 
+        if (anotherNumber1 !== this.winningNumber) {
+            arr.push(anotherNumber1);
+        }
+        else {
+            ++anotherNumber1;
+            arr.push(anotherNumber1);
+        }
+
+        let anotherNumber2 = generateWinningNumber(); 
+        if (anotherNumber2 !== this.winningNumber) {
+            arr.push(anotherNumber2);
+        }
+        else {
+            ++anotherNumber2;
+            arr.push(anotherNumber2);
+        }
         return shuffle(arr);
     }
 }
@@ -97,20 +114,27 @@ function newGame() {
 
 function playGame() {
     const game = newGame();
-    const button = document.querySelector('#submit-button')
+    const button = document.querySelector('#submit-button');
+    const hintButton = document.querySelector('#hint-button');
 
     button.addEventListener('click', function() {
         const playersGuess = +document.querySelector('.your-guess').value;
         document.querySelector('.your-guess').value = '';
-        document.querySelector('#current-status').textContent = game.playersGuessSubmission(playersGuess);
+        
+        if(game.pastGuesses.length === 5) {
+            document.querySelector('#current-status').textContent = "The Game is over, click 'Play again' to start another one"
+        }
+        else {
+            document.querySelector('#current-status').textContent = game.playersGuessSubmission(playersGuess);
+        }
     }
     );
 
-    document.querySelector('#hint').addEventListener('click', function() {
-        document.querySelector('#current-status').textContent = toString(game.provideHint().join(','));
+    hintButton.addEventListener('click', function() {
+        document.querySelector('#current-status').textContent = `The winning number is(was) one of these: ${game.provideHint().join(' , ')}`;
+        console.log('ddddd')
     });
 }
-
 
 document.querySelector('#play-again').addEventListener('click', function() {
     location.reload()
