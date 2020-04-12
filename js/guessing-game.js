@@ -56,6 +56,7 @@ class Game {
 
     checkGuess() {
         if (this.playersGuess === this.winningNumber) {
+            this.pastGuesses.length = 5;
             return "🏆YOU WIN!!!🏆"
         }
         if (this.pastGuesses.includes(this.playersGuess)) {
@@ -121,7 +122,7 @@ function playGame() {
         const playersGuess = +document.querySelector('.your-guess').value;
         document.querySelector('.your-guess').value = '';
         
-        if(game.pastGuesses.length === 5) {
+        if (game.pastGuesses.length === 5) {
             document.querySelector('#current-status').textContent = "The Game is over, click 'Play again' to start another one"
         }
         else {
